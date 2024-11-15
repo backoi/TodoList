@@ -1,10 +1,7 @@
-import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import {
   Dimensions,
   FlatList,
-  SafeAreaView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -29,7 +26,6 @@ export default function App() {
       };
       setListTodo([...listTodo, todo]);
       setAllTodo([...listTodo, todo]);
-
       setTask("");
     }
   };
@@ -41,13 +37,13 @@ export default function App() {
       return item;
     });
     setListTodo(newTodo);
-    const newAll=allTodo.map((item: any, index: number) => {
+    const newAll = allTodo.map((item: any, index: number) => {
       if (item.id == id) {
         return { ...item, isComplated: !item.isComplated };
       }
       return item;
     });
-    setAllTodo(newAll)//...
+    setAllTodo(newAll); //...
   };
   const handeUpdateTodo = () => {
     const newTodo = listTodo.map((item: any) => {
@@ -64,17 +60,14 @@ export default function App() {
     const newTodo = listTodo.find((item: any) => {
       return item.id == id;
     });
-    //console.log(newTodo)
     setIsEdit(true);
     setEditTodo(newTodo);
     setTask(newTodo.name);
-    //console.log('id',id)
   };
   const handleDelete = (id: number) => {
     const newTodo = listTodo.filter((item: any) => {
       return item.id != id;
     });
-
     setListTodo(newTodo);
     setAllTodo(newTodo);
   };
@@ -99,8 +92,17 @@ export default function App() {
     setActiveButton("Todo");
   };
   return (
-    <View style={styles.container}>
-      <Text style={{ color: "blue", fontSize: 30, fontWeight: 500 }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "#e3e3e3",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingHorizontal: 10,
+        paddingTop: 40,
+      }}
+    >
+      <Text style={{ color: "blue", fontSize: 30, fontWeight: 500, }}>
         TodoList
       </Text>
       <TextInput
@@ -119,7 +121,7 @@ export default function App() {
       ></TextInput>
 
       {isEdit ? (
-        <View style={{ flexDirection: "row", width: width * 0.9 }}>
+        <View style={{ flexDirection: "row", width: width * 0.9,}}>
           <TouchableOpacity
             onPress={() => {
               handeUpdateTodo();
@@ -133,7 +135,7 @@ export default function App() {
               marginVertical: 10,
             }}
           >
-            <Text style={{ color: "white", textAlign: "center" }}>Save</Text>
+            <Text style={{ color: "white", textAlign: "center", }}>Save</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -150,7 +152,7 @@ export default function App() {
               marginLeft: 10,
             }}
           >
-            <Text style={{ color: "black", textAlign: "center" }}>Cancel</Text>
+            <Text style={{ color: "black", textAlign: "center", }}>Cancel</Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -165,28 +167,49 @@ export default function App() {
             marginVertical: 10,
           }}
         >
-          <Text style={{ color: "white", textAlign: "center" }}>Add</Text>
+          <Text style={{ color: "white", textAlign: "center", }}>Add</Text>
         </TouchableOpacity>
       )}
-      <View style={{ flexDirection: "row", marginBottom: 10 }}>
+      <View style={{ flexDirection: "row", marginBottom: 10, }}>
         <TouchableOpacity
           onPress={() => getAllTodo()}
-          style={[styles.button, activeButton === "Todo" && styles.active]}
+          style={[
+            {
+              borderRadius: 5,
+              padding: 5,
+              backgroundColor: "white",
+              marginHorizontal: 5,
+            },
+            activeButton === "Todo" && { backgroundColor: "#5afc03", },
+          ]}
         >
           <Text>Todo</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => filterIncomplate()}
           style={[
-            styles.button,
-            activeButton === "Incomplate" && styles.active,
+            {
+              borderRadius: 5,
+              padding: 5,
+              backgroundColor: "white",
+              marginHorizontal: 5,
+            },
+            activeButton === "Incomplate" && { backgroundColor: "#5afc03", },
           ]}
         >
           <Text>Incomplete</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => filterComplate()}
-          style={[styles.button, activeButton === "Complated" && styles.active]}
+          style={[
+            {
+              borderRadius: 5,
+              padding: 5,
+              backgroundColor: "white",
+              marginHorizontal: 5,
+            },
+            activeButton === "Complated" && { backgroundColor: "#5afc03", },
+          ]}
         >
           <Text>Complated</Text>
         </TouchableOpacity>
@@ -216,28 +239,28 @@ export default function App() {
             <View style={{ flex: 1 }}>
               <Text
                 style={[
-                  { color: "black" },
+                  { color: "black", },
                   {
                     textDecorationLine: item.isComplated
                       ? "line-through"
                       : "none",
                   },
-                  styles.text,
+                  { fontSize: 16, },
                 ]}
               >
                 {item.name}
               </Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", }}>
               <TouchableOpacity
                 onPress={() => handleEdit(item.id)}
-                style={{ marginHorizontal: 5 }}
+                style={{ marginHorizontal: 5, }}
               >
                 <Icon name="pencil" size={20} color="blue" />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => handleDelete(item.id)}
-                style={{ marginHorizontal: 10 }}
+                style={{ marginHorizontal: 10, }}
               >
                 <Icon name="trash" size={20} color="red" />
               </TouchableOpacity>
@@ -248,29 +271,3 @@ export default function App() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#e3e3e3",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 10,
-    paddingTop: 40,
-  },
-  text: {
-    //width:500,
-    fontSize: 16,
-    //maxWidth: width*0.6,
-    //minWidth:width*0.6
-  },
-  active: {
-    backgroundColor: "#5afc03",
-  },
-  button: {
-    borderRadius: 5,
-    padding: 5,
-    backgroundColor: "white",
-    marginHorizontal: 5,
-  },
-});
