@@ -40,8 +40,14 @@ export default function App() {
       }
       return item;
     });
-    setAllTodo(newTodo);
-    setListTodo(newTodo); //...
+    setListTodo(newTodo);
+    const newAll=allTodo.map((item: any, index: number) => {
+      if (item.id == id) {
+        return { ...item, isComplated: !item.isComplated };
+      }
+      return item;
+    });
+    setAllTodo(newAll)//...
   };
   const handeUpdateTodo = () => {
     const newTodo = listTodo.map((item: any) => {
